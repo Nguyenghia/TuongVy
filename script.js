@@ -20,7 +20,7 @@ let countdown = setInterval(() => {
         countdownEl.textContent = "🎉";
 
         if (subtitle) {
-            subtitle.innerHTML = "Chúc bạn năm mới rực rỡ như pháo hoa, hạnh phúc ngập tràn và luôn có mình bên cạnh 💖";
+            subtitle.innerHTML = "Chúc người đánh cắp trái tim của tuii năm mới rực rỡ như pháo hoa, hạnh phúc ngập tràn 💖";
         }
 
         if (music && typeof music.play === "function") {
