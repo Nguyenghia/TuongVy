@@ -29,6 +29,11 @@ body {
     animation: glow 2s infinite alternate;
 }
 
+.personal-name {
+    font-size: clamp(20px, 3vw, 32px);
+    margin-top: 5px;
+}
+
 @keyframes glow {
     from { text-shadow: 0 0 10px gold; }
     to { text-shadow: 0 0 30px white; }
@@ -43,76 +48,7 @@ body {
     display: none;
 }
 
-/* 3D ENVELOPE */
-
-.envelope-section {
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.scene {
-    perspective: 1200px;
-}
-
-.envelope3d {
-    width: min(90vw, 340px);
-    height: min(60vw, 220px);
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform 1s ease;
-    cursor: pointer;
-}
-
-.envelope3d:hover {
-    transform: rotateY(10deg) rotateX(5deg);
-}
-
-.body {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(145deg, #cc0000, #990000);
-    border-radius: 15px;
-    box-shadow: 0 20px 60px rgba(255,215,0,0.7);
-}
-
-.lid {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(145deg, #ff0000, #cc0000);
-    transform-origin: top;
-    transition: transform 1s ease;
-    border-radius: 15px;
-}
-
-.letter {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: gold;
-    color: #990000;
-    padding: 20px;
-    text-align: center;
-    border-radius: 15px;
-    transform: translateY(100%);
-    transition: transform 1s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.envelope3d.open .lid {
-    transform: rotateX(180deg);
-}
-
-.envelope3d.open .letter {
-    transform: translateY(0);
-}
+/* Đã bỏ hiệu ứng bao lì xì 3D */
 
 /* Canvas layers */
 

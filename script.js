@@ -8,26 +8,22 @@ document.getElementById("personalName").innerText =
 let timeLeft = 10;
 const countdownEl = document.getElementById("countdown");
 const hero = document.querySelector(".hero");
-const envelopeSection = document.querySelector(".envelope-section");
-const envelope = document.getElementById("envelope");
+const subtitle = document.querySelector(".subtitle");
 const music = document.getElementById("bgMusic");
 
 let countdown = setInterval(() => {
     timeLeft--;
-    countdownEl.textContent = timeLeft;
-    if (timeLeft <= 0) {
+    if (timeLeft > 0) {
+        countdownEl.textContent = timeLeft;
+    } else {
         clearInterval(countdown);
-        hero.style.display = "none";
-        envelopeSection.classList.remove("hidden");
-    }
-}, 1000);
+        countdownEl.textContent = "🎉";
 
-if (envelope) {
-    envelope.addEventListener("click", () => {
-        envelope.classList.add("open");
+        if (subtitle) {
+            subtitle.innerHTML = "Chúc bạn năm mới rực rỡ như pháo hoa, hạnh phúc ngập tràn và luôn có mình bên cạnh 💖";
+        }
 
         if (music && typeof music.play === "function") {
-            // Bọc play() để tránh lỗi Promise bị reject trên một số trình duyệt
             const playPromise = music.play();
             if (playPromise && typeof playPromise.catch === "function") {
                 playPromise.catch(() => {});
@@ -35,8 +31,8 @@ if (envelope) {
         }
 
         launchFirework();
-    });
-}
+    }
+}, 1000);
 
 // =====================
 // 🔥 3D FIREWORK SYSTEM
