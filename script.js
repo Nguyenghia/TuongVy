@@ -22,11 +22,21 @@ let countdown = setInterval(() => {
     }
 }, 1000);
 
-envelope.addEventListener("click", () => {
-    envelope.classList.add("open");
-    music.play();
-    launchFirework();
-});
+if (envelope) {
+    envelope.addEventListener("click", () => {
+        envelope.classList.add("open");
+
+        if (music && typeof music.play === "function") {
+            // Bọc play() để tránh lỗi Promise bị reject trên một số trình duyệt
+            const playPromise = music.play();
+            if (playPromise && typeof playPromise.catch === "function") {
+                playPromise.catch(() => {});
+            }
+        }
+
+        launchFirework();
+    });
+}
 
 // =====================
 // 🔥 3D FIREWORK SYSTEM
@@ -70,7 +80,8 @@ function updateFireworks() {
     ctx.fillStyle = "rgba(0,0,0,0.15)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    particles.forEach((p, i) => {
+    for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
         p.x += p.vx;
         p.y += p.vy;
         p.z += p.vz;
@@ -91,8 +102,10 @@ function updateFireworks() {
         );
         ctx.fill();
 
-        if (p.alpha <= 0) particles.splice(i, 1);
-    });
+        if (p.alpha <= 0) {
+            particles.splice(i, 1);
+        }
+    }
 
     ctx.globalAlpha = 1;
     requestAnimationFrame(updateFireworks);
@@ -133,6 +146,21 @@ const flowerCanvas = document.getElementById("flowers");
 const fctx = flowerCanvas.getContext("2d");
 flowerCanvas.width = window.innerWidth;
 flowerCanvas.height = window.innerHeight;
+
+function resizeCanvases() {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    canvas.width = width;
+    canvas.height = height;
+    sparkleCanvas.width = width;
+    sparkleCanvas.height = height;
+    flowerCanvas.width = width;
+    flowerCanvas.height = height;
+}
+
+resizeCanvases();
+window.addEventListener("resize", resizeCanvases);
 
 let petals = Array.from({length: 40}, () => ({
     x: Math.random() * flowerCanvas.width,
